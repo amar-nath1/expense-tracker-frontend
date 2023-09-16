@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="loginForm" (ngSubmit)="userLogin()">
+  <ion-item>
+    <ion-label>Email :- </ion-label>
+    <ion-input formControlName="email" type="email"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label>Password :- </ion-label>
+    <ion-input formControlName="password" type="password"></ion-input>
+  </ion-item>
+  <ion-text  color="danger">{{errorText}}</ion-text>
+  <ion-button type="submit" expand="full">Login</ion-button>
+  <div class="ion-text-center ion-margin-vertical">
+  <ion-text >Don't have an account? <a routerLink="/signup">Sign Up</a></ion-text>
+</div>
+</form>
+</ion-content>
