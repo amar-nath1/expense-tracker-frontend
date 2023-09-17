@@ -7,11 +7,25 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-item>
+    <ion-label>Amount :- </ion-label>
+    <ion-input [(ngModel)]="expense.amount" type="number"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label>Description :- </ion-label>
+    <ion-input [(ngModel)]="expense.description" type="text"></ion-input>
+  </ion-item>
+  <ion-item>
+    
+    <ion-select [(ngModel)]="expense.expenseType" placeholder="Expense Type" interface="popover">
+      <ion-select-option value="grocery">Grocery</ion-select-option>
+      <ion-select-option value="entertainment">Entertainment</ion-select-option>
+      <ion-select-option value="others">Others</ion-select-option>
+    </ion-select>
+  </ion-item>
+  
+  <ion-button (click)="addExpenseHandler()" expand="full">Add Expense</ion-button>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <!-- <app-explore-container name="Tab 2 page"></app-explore-container> -->
 </ion-content>
