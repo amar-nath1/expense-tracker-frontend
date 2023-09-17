@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormBuilder,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import { StorageService } from 'src/app/services/storageService.js/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class LoginPage implements OnInit {
   loginForm:FormGroup;
   public errorText=''
-  constructor(private router:Router,private apiService:ApiService,private fb:FormBuilder) {
+  constructor(public storageService:StorageService,private router:Router,private apiService:ApiService,private fb:FormBuilder) {
     this.loginForm=this.fb.group({
       email:['',Validators.required],
       password:['',Validators.required]
@@ -25,7 +26,10 @@ export class LoginPage implements OnInit {
     console.log(this.loginForm.value)
     this.apiService.post('user-login',this.loginForm.value).subscribe((res:any)=>{
       if (res.auth===true){
-          this.router.navigate(['tabs'])
+          this.storageService.setItem('userId',res.user.id).then(()=>{
+            this.router.navigate(['tabs'])
+          })
+          
       }
       else if (res.auth===false){
         this.errorText='Wrong Password'
