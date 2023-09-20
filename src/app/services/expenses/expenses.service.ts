@@ -9,11 +9,11 @@ export class ExpensesService {
   public allExpense:any=[]
 
   constructor(private storageService:StorageService,private apiService:ApiService) {
-this.getAllExpense()
+
    }
    async getAllExpense(){
-    const userId=await this.storageService.getItem('userId')
-        this.apiService.get(`all-expense/${userId}`).subscribe((res:any)=>{
+    const token=await this.storageService.getItem('token')
+        this.apiService.get(`all-expense`,token).subscribe((res:any)=>{
           this.allExpense=res.expenses
           console.log(res,' expeererere')
         })

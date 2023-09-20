@@ -11,8 +11,12 @@ export class Tab1Page {
   
 
   constructor(private apiService:ApiService,public expenseService:ExpensesService) {
-    this.expenseService.getAllExpense()
     
+    
+  }
+
+  ionViewWillEnter(){
+    this.expenseService.getAllExpense()
   }
 
   deleteExpenseHandler(id:any){

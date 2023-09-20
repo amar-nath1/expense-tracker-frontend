@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { StorageService } from '../services/storageService.js/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-explore-container',
@@ -7,6 +9,18 @@ import { Component, Input } from '@angular/core';
 })
 export class ExploreContainerComponent {
 
-  @Input() name?: string;
+  public name: string='';
+  constructor(private router:Router,private storageService:StorageService){
+      this.storageService.getItem('email').then((email)=>{
+        this.name=email
+      })
+  }
+
+
+  logoutHandler(){
+      this.storageService.clearStorage().then(()=>{
+        this.router.navigate(['login'])
+      })
+  }
 
 }

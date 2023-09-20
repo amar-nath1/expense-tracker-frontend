@@ -1,4 +1,12 @@
-<div id="container">
-  <strong>{{ name }}</strong>
-  <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-</div>
+<ion-header [translucent]="true">
+  <ion-toolbar >
+    <div style="display: flex; justify-content: space-between;">
+    <ion-title>
+      {{name}}
+    </ion-title>
+    <ion-title (click)="logoutHandler()" color="primary">
+      Logout
+    </ion-title>
+    </div>
+  </ion-toolbar>
+</ion-header>
