@@ -9,7 +9,7 @@ export class ExpensesService {
   public allExpense:any=[]
 
   constructor(private storageService:StorageService,private apiService:ApiService) {
-
+      
    }
    async getAllExpense(){
     const token=await this.storageService.getItem('token')

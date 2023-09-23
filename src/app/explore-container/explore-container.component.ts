@@ -10,16 +10,24 @@ import { Router } from '@angular/router';
 export class ExploreContainerComponent {
 
   public name: string='';
+  
   constructor(private router:Router,private storageService:StorageService){
-      this.storageService.getItem('email').then((email)=>{
-        this.name=email
-      })
+      this.getUserInfo()
+  }
+
+  async getUserInfo(){
+   const email=await this.storageService.getItem('email')
+      this.name=email
+      
   }
 
 
   logoutHandler(){
       this.storageService.clearStorage().then(()=>{
-        this.router.navigate(['login'])
+        this.router.navigate(['login'],{replaceUrl:true}).then(()=>{
+          window.location.reload()
+        })
+        
       })
   }
 

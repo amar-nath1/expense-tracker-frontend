@@ -14,7 +14,7 @@ export class StorageService {
     await this.storage.create()
    }
 
-  async setItem(key:string,value:string){
+  async setItem(key:string,value:any){
    await this.storage.set(key,value)
    }
 

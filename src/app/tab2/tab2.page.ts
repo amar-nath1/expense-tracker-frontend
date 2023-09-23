@@ -17,9 +17,10 @@ export class Tab2Page {
   constructor(private expenseService:ExpensesService,private storageService:StorageService,private apiService:ApiService) {}
 
   async addExpenseHandler(){
-    const userId=await this.storageService.getItem('userId')
-    const payload={...this.expense,userId:userId}
-    this.apiService.post('add-expense',payload).subscribe((res)=>{
+    const token=await this.storageService.getItem('token')
+    const payload={...this.expense}
+    console.log(token,'token in frontend')
+    this.apiService.post('add-expense',payload,token).subscribe((res)=>{
       this.expenseService.getAllExpense()
       this.expense={
         amount:'',

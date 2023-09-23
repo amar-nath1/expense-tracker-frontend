@@ -1,7 +1,10 @@
 <app-explore-container></app-explore-container>
 
 <ion-content [fullscreen]="true">
-  
+  <ion-header color="primary" class="ion-margin-vertical ion-text-end ion-padding">
+    <ion-text (click)="goPremiumHandler()">{{premiumService.prem}}</ion-text>
+    
+  </ion-header>
   <ion-grid>
     <ion-row>
       <ion-col>Amount</ion-col>
