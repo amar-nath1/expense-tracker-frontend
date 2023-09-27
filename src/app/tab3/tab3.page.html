@@ -7,11 +7,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <ion-text *ngIf="prem==false">Buy premium to see the leaderboard</ion-text>
+  
+  <ion-grid *ngIf="prem==true">
+    <h2>Leaderboard</h2>
+    <ion-row *ngFor="let ex of leaderBoardArray">
+      <ion-col>{{ex.name}}</ion-col>
+      <ion-col>{{ex.totalAmount}}</ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

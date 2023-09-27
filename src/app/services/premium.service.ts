@@ -12,18 +12,13 @@ public prem=''
 
   async getUserInfo(){
     
-    const prem=await this.storageService.getItem('prem')
-       if(prem===true){
-this.prem='You are premium'
-       }
-       else{
-        this.prem='Go premium'
-       }
+    
+       return this.storageService.getItem('prem')
        
    }
    async setPremium(){
-    this.prem='You are premium'
     await this.storageService.setItem('prem',true)
+    
     
                 
    }

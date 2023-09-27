@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ExpensesService } from '../services/expenses/expenses.service';
 import { ApiService } from '../services/api.service';
 
@@ -12,16 +12,26 @@ declare var Razorpay: any;
 })
 export class Tab1Page {
   public rzp1 :any
+  public premium='Go premium'
   
 
-  constructor(public premiumService:PremiumService,private storageService:StorageService,private apiService:ApiService,public expenseService:ExpensesService) {
+  constructor(private cdr:ChangeDetectorRef,public premiumService:PremiumService,private storageService:StorageService,private apiService:ApiService,public expenseService:ExpensesService) {
     
     
   }
 
   ionViewWillEnter(){
     
+    this.premiumService.getUserInfo().then((prm)=>{
+      this.premium=prm===true?'you are premium':'Go premium'
+      console.log(this.premium,'aafterset')
+    })
     this.expenseService.getAllExpense()
+  }
+
+  updateString() {
+    // Update yourString here
+    this.cdr.detectChanges(); // Trigger change detection
   }
   
 
@@ -38,7 +48,17 @@ export class Tab1Page {
           const token=await this.storageService.getItem('token')
               this.apiService.put('go-premium',{status:'SUCCESS',orderid:options.order_id,paymentid:response.razorpay_payment_id},token).subscribe(async (payres)=>{
                 console.log(payres,'payres')
-               this.premiumService.setPremium()
+                
+                console.log(this.premium,'beforeset')
+               this.premiumService.setPremium().then(()=>{
+                
+                  this.premium='you are premium'
+                  this.updateString()
+                  console.log(this.premium,'aafterset')
+                
+               })
+               
+               
                 
               })
         },
