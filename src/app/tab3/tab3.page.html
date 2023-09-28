@@ -13,7 +13,7 @@
     <h2>Leaderboard</h2>
     <ion-row *ngFor="let ex of leaderBoardArray">
       <ion-col>{{ex.name}}</ion-col>
-      <ion-col>{{ex.totalAmount}}</ion-col>
+      <ion-col>{{ex.totalAmount?ex.totalAmount:0}}</ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
