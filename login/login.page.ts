@@ -26,7 +26,12 @@ export class LoginPage implements OnInit {
     console.log(this.loginForm.value)
     this.apiService.post('user-login',this.loginForm.value).subscribe((res:any)=>{
       if (res.auth===true){
-          this.storageService.setItem('userId',res.user.id).then(()=>{
+        
+          this.storageService.setItem('userId',res.user.id).then(async()=>{
+           await this.storageService.setItem('email',res.user.email)
+           await this.storageService.setItem('token',res.token)
+           await this.storageService.setItem('prem',res.user.premium)
+           this.loginForm.reset()
             this.router.navigate(['tabs'])
           })
           
