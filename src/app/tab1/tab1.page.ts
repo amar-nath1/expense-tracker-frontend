@@ -88,8 +88,9 @@ export class Tab1Page {
     })
   }
 
-  deleteExpenseHandler(id:any){
-    this.apiService.delete(`delete/${id}`).subscribe((res)=>{
+  async deleteExpenseHandler(id:any){
+    const token=await this.storageService.getItem('token')
+    this.apiService.delete(`delete/${id}`,token).subscribe((res)=>{
       this.expenseService.getAllExpense()
     })
   }

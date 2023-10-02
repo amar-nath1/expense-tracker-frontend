@@ -60,8 +60,16 @@ export class ApiService {
 }
 
 
- delete(endpoint:string){
-  return this.http.delete(`${this.apiUrl}/${endpoint}`)
+ delete(endpoint:string,token:any){
+
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json', // or other content type as needed
+      'Authorization':token
+    }),
+  };
+
+  return this.http.delete(`${this.apiUrl}/${endpoint}`,httpOptions)
 }
 
 }
