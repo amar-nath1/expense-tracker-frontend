@@ -17,6 +17,10 @@ const routes: Routes = [
   {
     path:'tabs',
     loadChildren:()=>import('./tabs/tabs.module').then(m=>m.TabsPageModule)
+  },
+  {
+    path: 'password/resetpassword/:uuid',
+    loadChildren: () => import('./pages/forgot-password/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   }
   
 ];
