@@ -9,6 +9,8 @@ import { ExpensesService } from '../services/expenses/expenses.service';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
+  public entryType:string='expense'
+  public showExpenseForm=true
   public expense={
     amount:'',
     description:'',
@@ -21,7 +23,7 @@ export class Tab2Page {
     const payload={...this.expense}
     console.log(token,'token in frontend')
     this.apiService.post('add-expense',payload,token).subscribe((res)=>{
-      this.expenseService.getAllExpense()
+      this.expenseService.getAllExpense('year')
       this.expense={
         amount:'',
         description:'',
@@ -29,6 +31,10 @@ export class Tab2Page {
       }
       console.log(res,'postexpenseres')
     })
+  }
+
+  toggleEntryType(){
+      this.showExpenseForm=!this.showExpenseForm
   }
 
 }

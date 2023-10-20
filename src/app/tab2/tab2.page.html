@@ -7,16 +7,26 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-item>
+  <ion-segment (ionChange)="toggleEntryType()" class="ion-margin-vertical" mode="ios" [(ngModel)]="entryType">
+    <ion-segment-button value="expense">
+      <ion-label>Expense</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="income">
+      <ion-label>Income</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+
+  <ion-item >
     <ion-label>Amount :- </ion-label>
     <ion-input [(ngModel)]="expense.amount" type="number"></ion-input>
   </ion-item>
   
-  <ion-item>
+  <ion-item *ngIf="showExpenseForm">
     <ion-label>Description :- </ion-label>
     <ion-input [(ngModel)]="expense.description" type="text"></ion-input>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="showExpenseForm">
     
     <ion-select [(ngModel)]="expense.expenseType" placeholder="Expense Type" interface="popover">
       <ion-select-option value="grocery">Grocery</ion-select-option>
@@ -24,8 +34,17 @@
       <ion-select-option value="others">Others</ion-select-option>
     </ion-select>
   </ion-item>
+
+  <ion-item *ngIf="!showExpenseForm">
+    
+    <ion-select [(ngModel)]="expense.expenseType" placeholder="income type" interface="popover">
+      <ion-select-option value="salary">Salary</ion-select-option>
+      
+      <ion-select-option value="incomeOthers">Others</ion-select-option>
+    </ion-select>
+  </ion-item>
   
-  <ion-button (click)="addExpenseHandler()" expand="full">Add Expense</ion-button>
+  <ion-button (click)="addExpenseHandler()" expand="full">{{showExpenseForm?'Add Expense':'Add Income'}}</ion-button>
 
   <!-- <app-explore-container name="Tab 2 page"></app-explore-container> -->
 </ion-content>

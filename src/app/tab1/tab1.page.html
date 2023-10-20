@@ -6,17 +6,57 @@
     <ion-text (click)="goPremiumHandler()">{{premium}}</ion-text>
     
   </ion-header>
+  <ion-select [(ngModel)]="filterType" (ionChange)="expenseService.getAllExpense(filterType)" label="Apply Filter" label-placement="floating" fill="outline">
+    <ion-select-option value="month">This Month</ion-select-option>
+    <ion-select-option value="year">This Year</ion-select-option>
+    <ion-select-option value="week">This Week</ion-select-option>
+  </ion-select>
+
   <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-end" size="12">
+        <ion-button [disabled]="premium=='Go premium'" id="view-downloads" (click)="viewDownloadsHandler()">View Download</ion-button>
+        <ion-button [disabled]="premium=='Go premium'" id="download" (click)="downloadDataHandler()">Download</ion-button>
+      </ion-col>
+      <ion-popover trigger="view-downloads" triggerAction="click">
+        <ng-template>
+          <ion-content class="ion-padding">
+            <ion-list>
+              <div style="border-bottom: 1px solid grey;padding: 10px;" *ngFor="let url of allFileUrls; let i=index">
+               <ion-text>{{i+1}}. {{url['fileUrl']}}</ion-text>
+              <small> -> {{url['createdAt'] | date:'dd-MM-yyyy'}}</small>
+              </div>
+            </ion-list>
+          
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+
+      <ion-popover trigger="download" triggerAction="click">
+        <ng-template>
+          <ion-content class="ion-padding">{{expenseService.fileUrl}}</ion-content>
+        </ng-template>
+      </ion-popover>
+    </ion-row>
+    
     <ion-row>
       <ion-col>Amount</ion-col>
       <ion-col>Desc</ion-col>
       <ion-col>Type</ion-col>
       <ion-col>Action</ion-col>
     </ion-row>
-    <ion-row *ngFor="let ex of expenseService.allExpense">
-      <ion-col>{{ex.amount}}</ion-col>
+    <!-- <ion-row *ngFor="let ex of expenseService.allExpense; let i =index">
+      
+    </ion-row> -->
+    <ion-row *ngFor="let ex of expenseService.allExpense; let i =index">
+
+<ion-col size="12" *ngIf="showDateLabel(expenseService.allExpense[i-1],ex)">
+        <ion-label>{{ex.createdAt.split('T')[0] | date: 'dd-MM-yyyy'}}</ion-label>
+      </ion-col>
+
+      <ion-col [ngClass]="ex.income?'income-text':'expense-text'">{{ex.amount}}</ion-col>
       <ion-col>{{ex.description}}</ion-col>
-      <ion-col>{{ex.expenseType}}</ion-col>
+      <ion-col>{{ex.type}}</ion-col>
       <ion-col> <ion-icon id="ex.id" (click)="deleteExpenseHandler(ex.id)" name="trash"></ion-icon> </ion-col>
     </ion-row>
   </ion-grid>

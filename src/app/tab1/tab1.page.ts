@@ -11,8 +11,11 @@ declare var Razorpay: any;
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  
   public rzp1 :any
   public premium='Go premium'
+  public filterType='year'
+  public allFileUrls=[]
   
 
   constructor(private cdr:ChangeDetectorRef,public premiumService:PremiumService,private storageService:StorageService,private apiService:ApiService,public expenseService:ExpensesService) {
@@ -26,7 +29,7 @@ export class Tab1Page {
       this.premium=prm===true?'you are premium':'Go premium'
       console.log(this.premium,'aafterset')
     })
-    this.expenseService.getAllExpense()
+    this.expenseService.getAllExpense(this.filterType)
   }
 
   updateString() {
@@ -91,7 +94,31 @@ export class Tab1Page {
   async deleteExpenseHandler(id:any){
     const token=await this.storageService.getItem('token')
     this.apiService.delete(`delete/${id}`,token).subscribe((res)=>{
-      this.expenseService.getAllExpense()
+      this.expenseService.getAllExpense(this.filterType)
+    })
+  }
+
+  showDateLabel(i:any,j:any){
+      if(!i){
+        return true
+      }
+      else{
+        if(!(i.createdAt.split('T')[0]===j.createdAt.split('T')[0])){
+            return true
+        }
+        else return false
+      }
+  }
+
+ async downloadDataHandler(){
+  this.expenseService.getAllExpense(this.filterType,true)
+  }
+
+  async viewDownloadsHandler(){
+    const token=await this.storageService.getItem('token')
+    this.apiService.get('file-urls',token).subscribe((fileRes:any)=>{
+      console.log(fileRes.urls,' allfileurlss')
+      this.allFileUrls=fileRes.urls
     })
   }
 
