@@ -12,11 +12,13 @@
     <ion-select-option value="week">This Week</ion-select-option>
   </ion-select>
 
-  <ion-grid>
+  <ion-grid class="ion-margin-horizontal">
     <ion-row>
       <ion-col class="ion-text-end" size="12">
+         
         <ion-button [disabled]="premium=='Go premium'" id="view-downloads" (click)="viewDownloadsHandler()">View Download</ion-button>
         <ion-button [disabled]="premium=='Go premium'" id="download" (click)="downloadDataHandler()">Download</ion-button>
+        
       </ion-col>
       <ion-popover trigger="view-downloads" triggerAction="click">
         <ng-template>
@@ -38,6 +40,15 @@
         </ng-template>
       </ion-popover>
     </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-end" size="12">
+        <ion-select (ionChange)="onItemsPerPageChange()" [(ngModel)]="itemsPerPage" label="Items Per Page" placeholder="">
+          <ion-select-option value="5">5</ion-select-option>
+          <ion-select-option value="10">10</ion-select-option>
+          <ion-select-option value="15">15</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
     
     <ion-row>
       <ion-col>Amount</ion-col>
@@ -48,9 +59,9 @@
     <!-- <ion-row *ngFor="let ex of expenseService.allExpense; let i =index">
       
     </ion-row> -->
-    <ion-row *ngFor="let ex of expenseService.allExpense; let i =index">
+    <ion-row [ngClass]="i%2==0?'even-class':'odd-class'" *ngFor="let ex of expenseService.allExpense; let i =index">
 
-<ion-col class="ion-margin-start" size="12" *ngIf="showDateLabel(expenseService.allExpense[i-1],ex)">
+<ion-col class="date-class" size="12" *ngIf="showDateLabel(expenseService.allExpense[i-1],ex)">
         <ion-label>{{ex.createdAt.split('T')[0] | date: 'dd-MM-yyyy'}}</ion-label>
       </ion-col>
 

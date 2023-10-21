@@ -17,6 +17,7 @@ export class Tab1Page {
   public filterType='year'
   public allFileUrls=[]
   public page=0;
+  public itemsPerPage='5';
 
   constructor(private cdr:ChangeDetectorRef,public premiumService:PremiumService,private storageService:StorageService,private apiService:ApiService,public expenseService:ExpensesService) {
     
@@ -29,7 +30,10 @@ export class Tab1Page {
       this.premium=prm===true?'you are premium':'Go premium'
       console.log(this.premium,'aafterset')
     })
-    this.expenseService.getAllExpense(this.filterType,false,this.page)
+    this.storageService.getItem('itemsPerPage').then((ipg)=>{
+      this.itemsPerPage=ipg
+      this.expenseService.getAllExpense(this.filterType,false,this.page,Number(ipg))
+    })
   }
 
   updateString() {
@@ -39,7 +43,7 @@ export class Tab1Page {
 
   getPrevExpenses(){
     if(this.page>0){
-      this.page-=5
+      this.page-=Number(this.itemsPerPage)
       this.expenseService.getAllExpense(this.filterType,false,this.page)
       
     }
@@ -47,11 +51,15 @@ export class Tab1Page {
   }
 
   getNextExpenses(){
-    this.page+=5
-      this.expenseService.getAllExpense(this.filterType,false,this.page)
-      
-    
-    
+    this.page+=Number(this.itemsPerPage)
+      this.expenseService.getAllExpense(this.filterType,false,this.page) 
+  }
+
+  onItemsPerPageChange(){
+    this.storageService.setItem('itemsPerPage',this.itemsPerPage).then(()=>{
+      this.expenseService.getAllExpense(this.filterType,false,this.page,Number(this.itemsPerPage))
+    })
+   
   }
   
 
