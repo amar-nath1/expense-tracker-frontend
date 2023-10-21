@@ -16,7 +16,7 @@ export class Tab1Page {
   public premium='Go premium'
   public filterType='year'
   public allFileUrls=[]
-  
+  public page=0;
 
   constructor(private cdr:ChangeDetectorRef,public premiumService:PremiumService,private storageService:StorageService,private apiService:ApiService,public expenseService:ExpensesService) {
     
@@ -29,12 +29,29 @@ export class Tab1Page {
       this.premium=prm===true?'you are premium':'Go premium'
       console.log(this.premium,'aafterset')
     })
-    this.expenseService.getAllExpense(this.filterType)
+    this.expenseService.getAllExpense(this.filterType,false,this.page)
   }
 
   updateString() {
     // Update yourString here
     this.cdr.detectChanges(); // Trigger change detection
+  }
+
+  getPrevExpenses(){
+    if(this.page>0){
+      this.page-=5
+      this.expenseService.getAllExpense(this.filterType,false,this.page)
+      
+    }
+    
+  }
+
+  getNextExpenses(){
+    this.page+=5
+      this.expenseService.getAllExpense(this.filterType,false,this.page)
+      
+    
+    
   }
   
 

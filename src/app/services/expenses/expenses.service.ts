@@ -8,15 +8,17 @@ import { StorageService } from '../storageService.js/storage.service';
 export class ExpensesService {
   public allExpense:any=[]
   public fileUrl='...'
+  public rowCount:any;
 
   constructor(private storageService:StorageService,private apiService:ApiService) {
       
    }
-   async getAllExpense(filterType:any,download=false){
+   async getAllExpense(filterType:any,download=false,offset=0){
     const token=await this.storageService.getItem('token')
-        this.apiService.get(`all-expense?filtertype=${filterType}&download=${download}`,token).subscribe((res:any)=>{
+        this.apiService.get(`all-expense?filtertype=${filterType}&download=${download}&offset=${offset}`,token).subscribe((res:any)=>{
           if(!download){
             this.allExpense=res.expenses
+            this.rowCount=res.count
           console.log(res,' expeererere')
           }
           else{
