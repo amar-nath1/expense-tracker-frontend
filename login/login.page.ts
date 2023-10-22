@@ -10,6 +10,40 @@ import { StorageService } from 'src/app/services/storageService.js/storage.servi
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  public forgotpasswordEmail= ''
+  public showUserNotFoundText= false
+  public alertButtons = [{
+    text: 'Send Link',
+    role: 'confirm',
+    
+  },];
+  public alertInputs = [
+    {
+      placeholder: 'Email',
+      type: 'email',
+      
+    },
+    // {
+    //   placeholder: 'Nickname (max 8 characters)',
+    //   attributes: {
+    //     maxlength: 8,
+    //   },
+    // },
+    // {
+    //   type: 'number',
+    //   placeholder: 'Age',
+    //   min: 1,
+    //   max: 100,
+    // },
+    // {
+    //   type: 'textarea',
+    //   placeholder: 'A little about yourself',
+    // },
+  ];
+
+
+
+
   loginForm:FormGroup;
   public errorText=''
   constructor(public storageService:StorageService,private router:Router,private apiService:ApiService,private fb:FormBuilder) {
@@ -20,7 +54,29 @@ export class LoginPage implements OnInit {
    }
 
   ngOnInit() {
+    
   }
+
+
+  
+
+  setResult(ev:any) {
+    console.log(ev.detail.data.values['0']);
+    this.apiService.post(`password/forgotpassword`,{resetEmail:ev.detail.data.values['0']}).subscribe((res:any)=>{
+      
+      if(!res.userFound){
+        this.showUserNotFoundText=true
+      setTimeout(() => {
+        this.showUserNotFoundText=false
+      }, 1000);
+      }
+    })
+  }
+
+  
+    
+   
+  
 
   userLogin(){
     console.log(this.loginForm.value)
