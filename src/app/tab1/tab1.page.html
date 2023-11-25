@@ -1,12 +1,12 @@
 <app-explore-container></app-explore-container>
 
 <ion-content [fullscreen]="true">
-  <ion-header color="primary" class="ion-margin-vertical ion-text-end ion-padding">
+  <ion-header color="primary" class="ion-margin-vertical ion-text-center ion-padding">
     
-    <ion-text (click)="goPremiumHandler()">{{premium}}</ion-text>
+    <ion-text [ngClass]="{'go-prem':premium==='Go premium'}" (click)="goPremiumHandler()">{{premium}}</ion-text>
     
   </ion-header>
-  <ion-select [(ngModel)]="filterType" (ionChange)="expenseService.getAllExpense(filterType)" label="Apply Filter" label-placement="floating" fill="outline">
+  <ion-select [(ngModel)]="filterType" (ionChange)="onFilterTypeChange()" label="Apply Filter" label-placement="floating" fill="outline">
     <ion-select-option value="month">This Month</ion-select-option>
     <ion-select-option value="year">This Year</ion-select-option>
     <ion-select-option value="week">This Week</ion-select-option>

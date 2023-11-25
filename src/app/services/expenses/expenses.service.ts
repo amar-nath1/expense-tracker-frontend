@@ -15,7 +15,9 @@ export class ExpensesService {
    }
    async getAllExpense(filterType:any,download=false,offset=0,itemsPerPage=5){
     const token=await this.storageService.getItem('token')
-        this.apiService.get(`all-expense?filtertype=${filterType}&download=${download}&offset=${offset}&itemsperpage=${itemsPerPage}`,token).subscribe((res:any)=>{
+    let itemCountPerPage = itemsPerPage===0?5:itemsPerPage
+    console.log(itemsPerPage,'iteppp')
+        this.apiService.get(`all-expense?filtertype=${filterType}&download=${download}&offset=${offset}&itemsperpage=${itemCountPerPage}`,token).subscribe((res:any)=>{
           if(!download){
             this.allExpense=res.expenses
             this.rowCount=res.count

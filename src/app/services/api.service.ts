@@ -7,6 +7,8 @@ import { StorageService } from './storageService.js/storage.service';
 })
 export class ApiService {
   private apiUrl = 'http://localhost:4000';
+  // private apiUrl = 'http://192.168.168.229:4000';
+  // private apiUrl = 'http://52.62.18.183:4000';
   constructor(private storageService:StorageService,private http:HttpClient) {
 
    }

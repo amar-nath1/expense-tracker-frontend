@@ -31,7 +31,9 @@ export class Tab1Page {
       console.log(this.premium,'aafterset')
     })
     this.storageService.getItem('itemsPerPage').then((ipg)=>{
+      
       this.itemsPerPage=ipg
+      console.log(ipg,'ipddfgdfdggggg')
       this.expenseService.getAllExpense(this.filterType,false,this.page,Number(ipg))
     })
   }
@@ -44,15 +46,20 @@ export class Tab1Page {
   getPrevExpenses(){
     if(this.page>0){
       this.page-=Number(this.itemsPerPage)
-      this.expenseService.getAllExpense(this.filterType,false,this.page)
+      this.expenseService.getAllExpense(this.filterType,false,this.page,+this.itemsPerPage)
       
     }
     
   }
 
   getNextExpenses(){
+    
     this.page+=Number(this.itemsPerPage)
-      this.expenseService.getAllExpense(this.filterType,false,this.page) 
+      this.expenseService.getAllExpense(this.filterType,false,this.page,Number(this.itemsPerPage)) 
+  }
+
+  onFilterTypeChange(){
+    this.expenseService.getAllExpense(this.filterType,false,this.page,+this.itemsPerPage)
   }
 
   onItemsPerPageChange(){
@@ -65,6 +72,9 @@ export class Tab1Page {
 
 
   async goPremiumHandler(){
+    if (this.premium!=='Go premium'){
+      return
+    }
     const token=await this.storageService.getItem('token')
     this.apiService.get('go-premium',token).subscribe((res:any)=>{
       console.log(res,' get res')
